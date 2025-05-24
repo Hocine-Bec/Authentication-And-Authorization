@@ -1,6 +1,6 @@
 ﻿namespace BasicAuthentication.Enums
 {
-    public enum Status
+    public enum TodoTaskStatus
     {
         Pending,
         InProgress,

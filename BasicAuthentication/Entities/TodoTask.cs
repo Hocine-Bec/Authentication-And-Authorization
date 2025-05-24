@@ -7,7 +7,7 @@ namespace BasicAuthentication.Entities
         public int Id { get; set; }
         public required string Title { get; set; }
         public string? Description { get; set; }
-        public Status TaskStatus { get; set; }
+        public TodoTaskStatus TaskStatus { get; set; }
         public TimeSlot? DateRange { get; set; }
 
         public int? UserId { get; set; }
