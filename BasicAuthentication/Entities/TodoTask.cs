@@ -10,8 +10,8 @@ namespace BasicAuthentication.Entities
         public Status TaskStatus { get; set; }
         public TimeSlot? DateRange { get; set; }
 
-        public int UserId { get; set; }
-        public required User User { get; set; }
+        public int? UserId { get; set; }
+        public User? User { get; set; }
     }
 
     public class TimeSlot
