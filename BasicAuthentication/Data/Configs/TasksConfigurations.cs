@@ -36,6 +36,11 @@ namespace BasicAuthentication.Data.Configs
                 ts.Property(x => x.EndDate).HasColumnType("date").HasColumnName("EndDate").IsRequired();
             });
 
+            builder.HasOne(x => x.User)
+               .WithMany(x => x.AssignedTasks)
+               .HasForeignKey(x => x.UserId)
+               .OnDelete(DeleteBehavior.SetNull);
+
             builder.ToTable("Tasks");
         }
     }
