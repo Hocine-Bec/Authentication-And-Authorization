@@ -11,4 +11,10 @@ namespace BasicAuthentication.DTOs
         public DateTime? EndDate { get; set; }
         public int? UserId { get; set; }
     }
+
+    public class AssignTasksRequest
+    {
+        public int UserId { get; set; }
+        public List<int> TaskIds { get; set; } = new();
+    }
 }
