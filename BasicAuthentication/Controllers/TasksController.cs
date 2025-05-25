@@ -23,7 +23,10 @@ namespace BasicAuthentication.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<TodoTask>>> GetAll()
         {
-            var tasks = await _context.Tasks.ToListAsync();
+            var tasks = await _context.Tasks
+                .AsNoTracking()
+                .ToListAsync();
+            
             return Ok(tasks);
         }
 
@@ -37,7 +40,10 @@ namespace BasicAuthentication.Controllers
             if (taskId <= 0)
                 return BadRequest("Task ID must be greater than 0");
 
-            var task = await _context.Tasks.FindAsync(taskId);
+            var task = await _context.Tasks
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == taskId);
+            
             if (task == null)
                 return NotFound($"Task with ID {taskId} not found");
 
