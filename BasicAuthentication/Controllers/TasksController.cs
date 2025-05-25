@@ -2,7 +2,7 @@
 using BasicAuthentication.DTOs;
 using BasicAuthentication.Entities;
 using BasicAuthentication.Enums;
-using BasicAuthentication.Helper;
+using BasicAuthentication.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -60,7 +60,7 @@ namespace BasicAuthentication.Controllers
             if (request == null)
                 return BadRequest("Task data is required");
 
-            var task = MyMapper.MapCreate(request);
+            var task = TaskMapper.MapCreate(request);
 
             await _context.AddAsync(task);
             await _context.SaveChangesAsync();

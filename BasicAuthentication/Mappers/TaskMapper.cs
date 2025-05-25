@@ -1,10 +1,9 @@
-﻿using Azure.Core;
-using BasicAuthentication.DTOs;
+﻿using BasicAuthentication.DTOs;
 using BasicAuthentication.Entities;
 
-namespace BasicAuthentication.Helper
+namespace BasicAuthentication.Mappers
 {
-    public static class MyMapper
+    public static class TaskMapper
     {
         public static TodoTask MapUpdate(this TodoTask task, TaskRequest request)
         {
