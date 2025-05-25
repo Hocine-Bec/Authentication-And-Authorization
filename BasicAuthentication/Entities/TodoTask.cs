@@ -16,12 +16,15 @@ namespace BasicAuthentication.Entities
 
     public class TimeSlot
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public override string ToString()
         {
-            return $"{StartDate.ToString("yyyy/MM/dd")} -- {EndDate.ToString("yyyy/MM/dd")}";
+            var start = StartDate?.ToString("yyyy/MM/dd") ?? "Not started";
+            var end = EndDate?.ToString("yyyy/MM/dd") ?? "No end date";
+
+            return $"{start} -- {end}";
         }
     }
 }
