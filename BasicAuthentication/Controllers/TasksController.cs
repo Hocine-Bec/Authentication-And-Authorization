@@ -3,13 +3,16 @@ using BasicAuthentication.DTOs;
 using BasicAuthentication.Entities;
 using BasicAuthentication.Enums;
 using BasicAuthentication.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace BasicAuthentication.Controllers
 {
     [Route("Tasks")]
     [ApiController]
+    [Authorize]
     public class TasksController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -21,6 +24,7 @@ namespace BasicAuthentication.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<TodoTask>>> GetAll()
         {
             var tasks = await _context.Tasks
@@ -37,6 +41,9 @@ namespace BasicAuthentication.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<TodoTask>> GetById(int taskId)
         {
+            var username = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.Name);
+
             if (taskId <= 0)
                 return BadRequest("Task ID must be greater than 0");
 
