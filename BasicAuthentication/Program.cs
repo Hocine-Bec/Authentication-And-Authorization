@@ -2,6 +2,8 @@ using BasicAuthentication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.OpenApi; // For AddOpenApi()
 using Scalar.AspNetCore;
+using Microsoft.AspNetCore.Authentication;
+using BasicAuthentication.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Constr"));
 });
+builder.Services.AddAuthentication()
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("Basic", null);
 
 
 var app = builder.Build();
