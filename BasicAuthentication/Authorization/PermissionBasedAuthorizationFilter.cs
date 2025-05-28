@@ -28,7 +28,7 @@ namespace BasicAuthentication.Authorization
 
                 var userIdClaims = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-                if(userIdClaims == null || int.TryParse(userIdClaims.Value, out var userId))
+                if(userIdClaims == null || !int.TryParse(userIdClaims.Value, out var userId))
                 {
                     context.Result = new ForbidResult();
                     return;
