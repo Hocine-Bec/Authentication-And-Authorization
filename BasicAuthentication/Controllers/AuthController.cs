@@ -56,7 +56,8 @@ namespace BasicAuthentication.Controllers
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new(ClaimTypes.NameIdentifier, userCredentials.Id.ToString()),
-                    new(ClaimTypes.Name, userCredentials.Username)
+                    new(ClaimTypes.Name, userCredentials.Username),
+                    new(ClaimTypes.Role, "User")
                 })
             };
 
