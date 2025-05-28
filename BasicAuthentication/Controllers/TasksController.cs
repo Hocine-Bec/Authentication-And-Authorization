@@ -38,6 +38,7 @@ namespace BasicAuthentication.Controllers
 
         [HttpGet]
         [Route("{taskId}")]
+        [Authorize(Policy = "AdminOrCanRead")]
         [CheckPermission(Permission.Read)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK)]
