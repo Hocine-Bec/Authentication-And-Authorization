@@ -1,4 +1,5 @@
-﻿using BasicAuthentication.Data;
+﻿using BasicAuthentication.Authorization;
+using BasicAuthentication.Data;
 using BasicAuthentication.DTOs;
 using BasicAuthentication.Entities;
 using BasicAuthentication.Enums;
@@ -23,8 +24,8 @@ namespace BasicAuthentication.Controllers
         }
 
         [HttpGet]
+        [CheckPermission(Permission.Read)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<TodoTask>>> GetAll()
         {
             var tasks = await _context.Tasks
@@ -37,12 +38,13 @@ namespace BasicAuthentication.Controllers
 
         [HttpGet]
         [Route("{taskId}")]
+        [CheckPermission(Permission.Read)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<TodoTask>> GetById(int taskId)
         {
-            var username = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = User.FindFirstValue(ClaimTypes.Name);
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (taskId <= 0)
                 return BadRequest("Task ID must be greater than 0");
@@ -59,6 +61,7 @@ namespace BasicAuthentication.Controllers
 
 
         [HttpPost]
+        [CheckPermission(Permission.Create)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -79,6 +82,7 @@ namespace BasicAuthentication.Controllers
 
         [HttpPut]
         [Route("{taskId}")]
+        [CheckPermission(Permission.Update)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -106,6 +110,7 @@ namespace BasicAuthentication.Controllers
 
         [HttpDelete]
         [Route("{taskId}")]
+        [CheckPermission(Permission.Delete)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -128,6 +133,7 @@ namespace BasicAuthentication.Controllers
 
         [HttpPatch]
         [Route("{taskId}")]
+        [CheckPermission(Permission.Update)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
