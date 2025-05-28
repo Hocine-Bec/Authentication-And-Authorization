@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BasicAuthentication.Authorization;
+using System.Security.Claims;
+using BasicAuthentication.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +31,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //Basic
 //builder.Services.AddAuthentication()
 //    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("Basic", null);
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOrCanRead",
+        policy => policy.AddRequirements(new PermissionRequirements(Permission.Read)));
+});
+
+builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
 var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
 builder.Services.AddAuthentication()
